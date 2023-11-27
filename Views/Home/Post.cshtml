@@ -1,0 +1,39 @@
+@using System.Web
+
+<div class="postviewer">
+    <div class="post_content">
+        @if (@Model.Title != null)
+        {
+            <h1>@Model.Title</h1>
+            <contentful-rich-text document="@Model.Body"></contentful-rich-text>
+        }
+        else
+        {
+            <h1>Post doesn't exist!</h1>
+            <a href="/home">Return home</a>
+        }
+    </div>
+    <div class="post_sidecard">
+        @* code sidecard with all posts *@
+        @if (Model.Image != null && Model.Image.File != null)
+        {
+            <img class="post_sidecard_img" src="@Model.Image.File.Url" alt="@Model.Image.Description" class="post-banner" />
+        }
+        <h5 class="post_sidecard_title">Info</h5>
+        <ul>
+            <li>Created at: <span id="post_create_date">@Model.Sys.CreatedAt</span></li>
+            <li>Last updated at: <span id="post_update_date">@Model.Sys.UpdatedAt</span></li>
+        </ul>
+        <h5 class="post_sidecard_title">Posts</h5>
+        <ul>
+            @foreach (var post in ViewBag.allPosts)
+            {
+                <li><a href="/posts/@HttpUtility.UrlEncode(post.Title)">@post.Title</a></li>
+            }
+        </ul>
+        <h5 class="post_sidecard_title">Overview</h5>
+        <ul>
+            <li><a href="/">Overview</a></li>
+        </ul>
+    </div>
+</div>

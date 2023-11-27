@@ -1,0 +1,30 @@
+﻿@using Contentful.Core.Models
+@using System.Web
+
+@model ContentfulCollection<Post>
+
+@{
+    ViewData["Title"] = "Post overview";
+}
+
+
+<h1 id="index_title">Post overview</h1>
+<div id="overview_container">
+    <div class="post_grid">
+        @foreach (var post in Model)
+        {
+            <a href="/posts/@HttpUtility.UrlEncode(post.Title)">
+                <div class="card postlink glass">
+                    @if (post.Image != null && post.Image.File != null)
+                    {
+                        <img class="card_img" src="@post.Image.File.Url" alt="@post.Image.Description" class="post-banner" />
+                    }
+                    <div class="card_footer post_created">
+                        <span class="post_title">@post.Title</span>
+                        <span class="post_date">@post.Sys.CreatedAt</span>
+                    </div>
+                </div>
+            </a>
+        }
+    </div>
+</div>
